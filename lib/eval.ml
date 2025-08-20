@@ -8,8 +8,9 @@ module T = struct
 
   let truthy value =
     match String.lowercase_ascii value with
-    | "false" | "0" | "" -> false
-    | _ -> true
+    | "false" -> false
+    | "true" -> true
+    | _ -> failwith "invalid boolean"
   ;;
 
   let eval_flag flags (name, default) =
