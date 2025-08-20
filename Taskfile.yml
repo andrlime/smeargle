@@ -1,0 +1,30 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - dune clean
+      - dune build
+    silent: true
+    aliases:
+      - b
+  run:
+    cmds:
+      - dune exec smeargle
+    silent: true
+    aliases:
+      - run
+      - r
+  format:
+    cmds:
+      - dune fmt
+    silent: true
+    aliases:
+      - fmt
+      - f
+  test:
+    cmds:
+      - dune test
+    silent: true
+    aliases:
+      - t

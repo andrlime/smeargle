@@ -1,0 +1,5 @@
+(library
+ (name smeargle)
+ (preprocess
+  (pps ppx_sexp_conv))
+ (libraries csv core_unix.filename_unix))

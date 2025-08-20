@@ -1,0 +1,4 @@
+(executable
+ (public_name smeargle)
+ (name main)
+ (libraries smeargle cmdliner))
