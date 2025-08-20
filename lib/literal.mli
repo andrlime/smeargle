@@ -1,12 +1,12 @@
 module ConfigValue : sig
-  type t = string
+  type t
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
 end
 
 module SectionName : sig
-  type t = string
+  type t
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
@@ -20,7 +20,7 @@ end
 end *)
 
 module Boolean : sig
-  type t = bool
+  type t
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
