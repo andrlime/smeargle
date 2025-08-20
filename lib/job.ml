@@ -8,4 +8,6 @@ module T = struct
     ; bullets : Variable.Bullets.t option [@sexp.option]
     }
   [@@deriving sexp]
+
+  let eval _flags t = t
 end

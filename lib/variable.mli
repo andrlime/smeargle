@@ -3,6 +3,7 @@ module Boolean : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> bool
 end
 
 module Integer : sig
@@ -10,6 +11,7 @@ module Integer : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end
 
 module Path : sig
@@ -17,6 +19,7 @@ module Path : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end
 
 module String : sig
@@ -24,6 +27,7 @@ module String : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end
 
 module Bullets : sig
@@ -31,4 +35,5 @@ module Bullets : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end

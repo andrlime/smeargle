@@ -8,6 +8,8 @@ module Degree = struct
         ; note : Variable.String.t option [@sexp.option]
         }
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module T = struct
@@ -20,4 +22,6 @@ module T = struct
     ; gpa : Variable.String.t option [@sexp.option]
     }
   [@@deriving sexp]
+
+  let eval _flags t = t
 end

@@ -4,6 +4,8 @@ let main path =
   |> Io.read_file
   |> Io.lispify
   |> Ast.T.of_string
+  |> Eval.T.evaluate
   |> Ast.T.to_string
-  |> print_endline
+  |> print_endline;
+  "A" |> print_endline
 ;;

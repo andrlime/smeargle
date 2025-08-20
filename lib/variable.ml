@@ -7,6 +7,14 @@ module Boolean = struct
     | Or of t * t
     | Xor of t * t
   [@@deriving sexp]
+
+  let rec eval flags t =
+    match t with
+    | Flag name -> Store.T.get_key flags name
+    | And (a, b) -> eval flags a && eval flags b
+    | Or (a, b) -> eval flags a || eval flags b
+    | Xor (a, b) -> eval flags (Or (a, b)) && not (eval flags (And (a, b)))
+  ;;
 end
 
 module Integer = struct
@@ -14,6 +22,8 @@ module Integer = struct
     | Integer of int
     | If of Boolean.t * t * t
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module Path = struct
@@ -21,6 +31,8 @@ module Path = struct
     | Path of Literal.Path.t
     | If of Boolean.t * t * t
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module String = struct
@@ -30,8 +42,12 @@ module String = struct
     | When of Boolean.t * t
     | TwoColumn of t * t
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module Bullets = struct
   type t = String.t list [@@deriving sexp]
+
+  let eval _flags t = t
 end

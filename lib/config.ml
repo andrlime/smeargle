@@ -7,6 +7,8 @@ module Profile = struct
     ; email : Variable.String.t
     }
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module Margin = struct
@@ -17,10 +19,14 @@ module Margin = struct
     ; bottom : Variable.Integer.t
     }
   [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module Output = struct
   type t = Typst of Variable.Path.t [@@deriving sexp]
+
+  let eval _flags t = t
 end
 
 module T = struct
@@ -34,4 +40,19 @@ module T = struct
     ; output : Output.t
     }
   [@@deriving sexp]
+
+  let create_config ~profile ~template ~margin ~justify ~pagesize ~font ~output =
+    { profile; template; margin; justify; pagesize; font; output }
+  ;;
+
+  let eval flags t =
+    create_config
+      ~profile:(Profile.eval flags t.profile)
+      ~template:(Variable.Path.eval flags t.template)
+      ~margin:(Margin.eval flags t.margin)
+      ~justify:(Literal.Boolean.eval flags t.justify)
+      ~pagesize:(Variable.String.eval flags t.pagesize)
+      ~font:(Variable.String.eval flags t.font)
+      ~output:(Output.eval flags t.output)
+  ;;
 end

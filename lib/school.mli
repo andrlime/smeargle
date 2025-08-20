@@ -3,6 +3,7 @@ module Degree : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end
 
 module T : sig
@@ -17,4 +18,5 @@ module T : sig
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
 end
