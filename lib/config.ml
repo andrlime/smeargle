@@ -26,7 +26,7 @@ end
 module T = struct
   type t =
     { profile : Profile.t
-    ; template : Variable.String.t
+    ; template : Variable.Path.t
     ; margin : Margin.t
     ; justify : Literal.Boolean.t
     ; pagesize : Variable.String.t
