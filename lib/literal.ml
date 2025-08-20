@@ -1,5 +1,9 @@
 open Sexplib.Std
 
+module Path = struct
+  type t = string [@@deriving sexp]
+end
+
 module ConfigValue = struct
   type t = string [@@deriving sexp]
 end

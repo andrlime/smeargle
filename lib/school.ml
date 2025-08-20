@@ -1,9 +1,10 @@
 open Sexplib.Std
 
 module Degree = struct
-  type t = {
+  type t = Degree of {
     title : Variable.String.t ;
-    major : Variable.String.t
+    major : Variable.String.t ;
+    note : Variable.String.t option [@sexp.option]
   } [@@deriving sexp]
 end
 
@@ -14,6 +15,6 @@ module T = struct
     until : Variable.String.t ;
     degrees : Degree.t list ;
     where: Variable.String.t ;
-    gpa : Variable.String.t ;
+    gpa : Variable.String.t option [@sexp.option];
   } [@@deriving sexp]
 end

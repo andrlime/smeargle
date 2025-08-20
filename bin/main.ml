@@ -1,8 +1,8 @@
-(* open Smeargle *)
+open Smeargle
 open Cmdliner
 
 let version = "1.0a"
-let smeargle_process_file file = file |> ignore;
+let smeargle_process_file file = file |> Entry_point.main;
 ;;
 
 let input_file_arg =

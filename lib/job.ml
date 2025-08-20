@@ -5,6 +5,6 @@ module T = struct
     start : Variable.String.t ;
     until : Variable.String.t ;
     where: Variable.String.t ;
-    bullets : Variable.Bullets.t
+    bullets : Variable.Bullets.t option [@sexp.option]
   } [@@deriving sexp]
 end

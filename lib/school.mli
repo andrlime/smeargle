@@ -12,7 +12,7 @@ module T : sig
     until : Variable.String.t ;
     degrees : Degree.t list ;
     where: Variable.String.t ;
-    gpa : Variable.String.t ;
+    gpa : Variable.String.t option ;
   }
 
   val t_of_sexp : Sexplib0.Sexp.t -> t

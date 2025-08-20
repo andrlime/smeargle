@@ -21,7 +21,7 @@ end
 
 module Output = struct
   type t = 
-    | Typst of Variable.String.t
+    | Typst of Variable.Path.t
   [@@deriving sexp]
 end
 
