@@ -18,11 +18,6 @@ end
 module T = struct
   type t = AstNode.t list [@@deriving sexp]
 
-  let to_string t =
-    t |> sexp_of_t |> Sexplib.Sexp.to_string
-  ;;
-
-  let of_string str =
-    str |> Sexplib.Sexp.of_string |> t_of_sexp
-  ;;
+  let to_string t = t |> sexp_of_t |> Sexplib.Sexp.to_string
+  let of_string str = str |> Sexplib.Sexp.of_string |> t_of_sexp
 end

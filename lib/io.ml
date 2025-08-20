@@ -26,6 +26,4 @@ let write_file path content =
   close_out channel
 ;;
 
-let lispify string =
-  "(" ^ string ^ ")"
-;;
+let lispify string = "(" ^ string ^ ")"

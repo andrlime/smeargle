@@ -2,8 +2,7 @@ open Smeargle
 open Cmdliner
 
 let version = "1.0a"
-let smeargle_process_file file = file |> Entry_point.main;
-;;
+let smeargle_process_file file = file |> Entry_point.main
 
 let input_file_arg =
   let doc = "The file to compile, provided via --input or -i." in

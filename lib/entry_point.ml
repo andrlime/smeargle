@@ -5,5 +5,5 @@ let main path =
   |> Io.lispify
   |> Ast.T.of_string
   |> Ast.T.to_string
-  |> print_endline;
+  |> print_endline
 ;;
