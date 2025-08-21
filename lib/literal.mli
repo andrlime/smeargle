@@ -4,6 +4,7 @@ module String : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module ConfigValue : sig
@@ -12,6 +13,7 @@ module ConfigValue : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module SectionName : sig
@@ -20,6 +22,7 @@ module SectionName : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module Path : sig
@@ -28,6 +31,7 @@ module Path : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module Boolean : sig
@@ -36,4 +40,5 @@ module Boolean : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end

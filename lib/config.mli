@@ -4,6 +4,7 @@ module Profile : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module Margin : sig
@@ -12,14 +13,7 @@ module Margin : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
-end
-
-module Output : sig
-  type t
-
-  val t_of_sexp : Sexplib0.Sexp.t -> t
-  val sexp_of_t : t -> Sexplib0.Sexp.t
-  val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end
 
 module T : sig
@@ -30,10 +24,10 @@ module T : sig
     ; justify : Literal.Boolean.t
     ; pagesize : Variable.String.t
     ; font : Variable.String.t
-    ; output : Output.t
     }
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
 end

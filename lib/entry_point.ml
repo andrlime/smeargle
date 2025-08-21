@@ -5,6 +5,6 @@ let main path =
   |> Io.lispify
   |> Ast.T.of_string
   |> Eval.T.evaluate
-  |> Ast.T.to_string
-  |> print_endline
+  |> Codegen.T.emit_and_compile
+  |> ignore
 ;;

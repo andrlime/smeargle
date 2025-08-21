@@ -19,6 +19,8 @@ module Boolean = struct
     | Not a -> not (eval flags a)
     | Nand (a, b) -> not (eval flags (And (a, b)))
   ;;
+
+  let typst_to_string _ = failwith "cannot to_string a Literal.Boolean"
 end
 
 module Integer = struct
@@ -33,6 +35,8 @@ module Integer = struct
     | If (cond, thn, els) ->
       if Boolean.eval flags cond then eval flags thn else eval flags els
   ;;
+
+  let typst_to_string _t = ""
 end
 
 module Path = struct
@@ -53,6 +57,8 @@ module Path = struct
     | If (cond, thn, els) ->
       if Boolean.eval flags cond then eval flags thn else eval flags els
   ;;
+
+  let typst_to_string _t = ""
 end
 
 module String = struct
@@ -73,6 +79,8 @@ module String = struct
     | TwoColumn (l, r) -> TwoColumn (eval flags l, eval flags r)
     | StringsList _ -> failwith "top level StringsList not supported"
   ;;
+
+  let typst_to_string _t = ""
 end
 
 module Bullets = struct
@@ -86,4 +94,6 @@ module Bullets = struct
         if Boolean.eval flags cond then Some (String.eval flags thn) else None
       | _ -> Some (String.eval flags node))
   ;;
+
+  let typst_to_string _t = ""
 end

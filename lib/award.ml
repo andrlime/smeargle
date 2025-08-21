@@ -10,4 +10,6 @@ module T = struct
     ; organisation = Variable.String.eval flags t.organisation
     }
   ;;
+
+  let typst_to_string _t = ""
 end

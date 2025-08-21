@@ -5,12 +5,14 @@ module T = struct
     | Italics of Literal.String.t
   [@@deriving sexp]
 
-  let create_t fmt str =
+  let create_t ~typ:fmt str =
     match fmt with
     | '*' -> Bold str
     | '_' -> Italics str
     | _ -> Unformatted str
   ;;
+
+  let[@inline] start_block ch stack = Stack.push ch stack
 
   let[@inline] should_start_block ch =
     match ch with
@@ -18,6 +20,7 @@ module T = struct
     | _ -> false
   ;;
 
+  let[@inline] end_block stack = Stack.pop stack |> ignore
   let[@inline] should_end_block stack ch = Stack.length stack > 0 && ch = Stack.top stack
   let[@inline] get_first_char str = String.get str 0
   let[@inline] remove_first_char str = String.sub str 1 (String.length str - 1)
@@ -25,32 +28,29 @@ module T = struct
   (*
      Bold: *string*
     Italics: _string_
-    Bold-italics: *_string_*
-    Can stack them and whatnot
-
-    *_string*_ will lead to undefined behavior (what's the point?)
-    Realistically, it will give * and then italicised string*
 
     TODO: Support escape sequences
+    TODO: Support stacking, like *_thing_*
 
     Returns in reverse order
   *)
   let format s =
     let (stack : char Stack.t) = Stack.create () in
+    let unformatted = ' ' in
     let rec traverse str stack cur acc =
       if str = ""
-      then create_t ' ' cur :: acc
+      then create_t ~typ:unformatted cur :: acc
       else (
         let firstchar = get_first_char str in
         let reststr = remove_first_char str in
         if should_end_block stack firstchar
         then (
-          Stack.pop stack |> ignore;
-          traverse reststr stack "" (create_t firstchar cur :: acc))
+          end_block stack;
+          traverse reststr stack "" (create_t ~typ:firstchar cur :: acc))
         else if should_start_block firstchar
         then (
-          Stack.push firstchar stack;
-          traverse reststr stack "" (create_t ' ' cur :: acc))
+          start_block firstchar stack;
+          traverse reststr stack "" (create_t ~typ:unformatted cur :: acc))
         else (
           let concatstr = cur ^ String.make 1 firstchar in
           traverse reststr stack concatstr acc))

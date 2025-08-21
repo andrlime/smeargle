@@ -21,6 +21,8 @@ module Degree = struct
              | None -> None)
         }
   ;;
+
+  let typst_to_string _t = ""
 end
 
 module T = struct
@@ -46,4 +48,6 @@ module T = struct
          | None -> None)
     }
   ;;
+
+  let typst_to_string _t = ""
 end

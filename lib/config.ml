@@ -22,6 +22,8 @@ module Profile = struct
          | None -> None)
     }
   ;;
+
+  let typst_to_string _t = ""
 end
 
 module Margin = struct
@@ -40,15 +42,8 @@ module Margin = struct
     ; bottom = Variable.Integer.eval flags t.bottom
     }
   ;;
-end
 
-module Output = struct
-  type t = Typst of Variable.Path.t [@@deriving sexp]
-
-  let eval flags t =
-    match t with
-    | Typst p -> Typst (Variable.Path.eval flags p)
-  ;;
+  let typst_to_string _t = ""
 end
 
 module T = struct
@@ -59,7 +54,6 @@ module T = struct
     ; justify : Literal.Boolean.t
     ; pagesize : Variable.String.t
     ; font : Variable.String.t
-    ; output : Output.t
     }
   [@@deriving sexp]
 
@@ -70,7 +64,8 @@ module T = struct
     ; justify = Literal.Boolean.eval flags t.justify
     ; pagesize = Variable.String.eval flags t.pagesize
     ; font = Variable.String.eval flags t.font
-    ; output = Output.eval flags t.output
     }
   ;;
+
+  let typst_to_string _t = ""
 end

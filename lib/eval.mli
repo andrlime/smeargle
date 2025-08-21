@@ -2,6 +2,7 @@ module T : sig
   type state =
     { ast : Ast.T.t
     ; flags : Literal.Boolean.t Store.T.t
+    ; output : Output.T.t
     }
 
   val create_state : Ast.T.t -> state
@@ -14,5 +15,5 @@ module T : sig
   val get_ast : state -> Ast.T.t
 
   (* Entry point to evaluator *)
-  val evaluate : Ast.T.t -> Ast.T.t
+  val evaluate : Ast.T.t -> state
 end

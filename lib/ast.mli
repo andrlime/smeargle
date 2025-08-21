@@ -1,6 +1,7 @@
 module AstNode : sig
   type t =
     | Flag of Literal.ConfigValue.t * Literal.Boolean.t
+    | Output of Output.T.t
     | Config of Config.T.t
     | Section of Literal.SectionName.t
     | School of School.T.t
