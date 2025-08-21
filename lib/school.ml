@@ -9,7 +9,18 @@ module Degree = struct
         }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    match t with
+    | Degree d ->
+      Degree
+        { title = Variable.String.eval flags d.title
+        ; major = Variable.String.eval flags d.major
+        ; note =
+            (match d.note with
+             | Some n -> Some (Variable.String.eval flags n)
+             | None -> None)
+        }
+  ;;
 end
 
 module T = struct
@@ -23,5 +34,16 @@ module T = struct
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    { name = Variable.String.eval flags t.name
+    ; start = Variable.String.eval flags t.start
+    ; until = Variable.String.eval flags t.until
+    ; degrees = t.degrees |> List.map (Degree.eval flags)
+    ; where = Variable.String.eval flags t.where
+    ; gpa =
+        (match t.gpa with
+         | Some g -> Some (Variable.String.eval flags g)
+         | None -> None)
+    }
+  ;;
 end

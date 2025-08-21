@@ -5,10 +5,23 @@ module Profile = struct
     ; github : Variable.String.t
     ; phone : Variable.String.t
     ; email : Variable.String.t
+    ; linkedin : Variable.String.t option [@sexp.option]
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  (* TODO: add LinkedIn option *)
+  let eval flags t =
+    { name = Variable.String.eval flags t.name
+    ; website = Variable.String.eval flags t.website
+    ; github = Variable.String.eval flags t.github
+    ; phone = Variable.String.eval flags t.phone
+    ; email = Variable.String.eval flags t.email
+    ; linkedin =
+        (match t.linkedin with
+         | Some l -> Some (Variable.String.eval flags l)
+         | None -> None)
+    }
+  ;;
 end
 
 module Margin = struct
@@ -20,13 +33,22 @@ module Margin = struct
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    { left = Variable.Integer.eval flags t.left
+    ; right = Variable.Integer.eval flags t.right
+    ; top = Variable.Integer.eval flags t.top
+    ; bottom = Variable.Integer.eval flags t.bottom
+    }
+  ;;
 end
 
 module Output = struct
   type t = Typst of Variable.Path.t [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    match t with
+    | Typst p -> Typst (Variable.Path.eval flags p)
+  ;;
 end
 
 module T = struct
@@ -41,18 +63,14 @@ module T = struct
     }
   [@@deriving sexp]
 
-  let create_config ~profile ~template ~margin ~justify ~pagesize ~font ~output =
-    { profile; template; margin; justify; pagesize; font; output }
-  ;;
-
   let eval flags t =
-    create_config
-      ~profile:(Profile.eval flags t.profile)
-      ~template:(Variable.Path.eval flags t.template)
-      ~margin:(Margin.eval flags t.margin)
-      ~justify:(Literal.Boolean.eval flags t.justify)
-      ~pagesize:(Variable.String.eval flags t.pagesize)
-      ~font:(Variable.String.eval flags t.font)
-      ~output:(Output.eval flags t.output)
+    { profile = Profile.eval flags t.profile
+    ; template = Variable.Path.eval flags t.template
+    ; margin = Margin.eval flags t.margin
+    ; justify = Literal.Boolean.eval flags t.justify
+    ; pagesize = Variable.String.eval flags t.pagesize
+    ; font = Variable.String.eval flags t.font
+    ; output = Output.eval flags t.output
+    }
   ;;
 end

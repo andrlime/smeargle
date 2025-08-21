@@ -8,5 +8,15 @@ module T = struct
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    { title = Variable.String.eval flags t.title
+    ; start = Variable.String.eval flags t.start
+    ; until = Variable.String.eval flags t.until
+    ; bullets = Variable.Bullets.eval flags t.bullets
+    ; organisation =
+        (match t.organisation with
+         | Some o -> Some (Variable.String.eval flags o)
+         | None -> None)
+    }
+  ;;
 end

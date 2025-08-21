@@ -9,5 +9,16 @@ module T = struct
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    { company = Variable.String.eval flags t.company
+    ; title = Variable.String.eval flags t.title
+    ; start = Variable.String.eval flags t.start
+    ; until = Variable.String.eval flags t.until
+    ; where = Variable.String.eval flags t.where
+    ; bullets =
+        (match t.bullets with
+         | Some b -> Some (Variable.Bullets.eval flags b)
+         | None -> None)
+    }
+  ;;
 end

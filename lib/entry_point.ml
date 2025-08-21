@@ -7,5 +7,4 @@ let main path =
   |> Eval.T.evaluate
   |> Ast.T.to_string
   |> print_endline;
-  "A" |> print_endline
 ;;

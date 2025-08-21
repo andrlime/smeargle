@@ -20,6 +20,7 @@ module Path : sig
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
   val eval : Flags.T.t -> t -> t
+  val check_path_exists : Literal.Path.t -> Literal.Path.t
 end
 
 module String : sig

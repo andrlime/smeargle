@@ -5,5 +5,9 @@ module T = struct
     }
   [@@deriving sexp]
 
-  let eval _flags t = t
+  let eval flags t =
+    { title = Variable.String.eval flags t.title
+    ; organisation = Variable.String.eval flags t.organisation
+    }
+  ;;
 end
