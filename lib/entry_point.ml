@@ -6,5 +6,5 @@ let main path =
   |> Ast.T.of_string
   |> Eval.T.evaluate
   |> Ast.T.to_string
-  |> print_endline;
+  |> print_endline
 ;;

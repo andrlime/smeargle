@@ -1,5 +1,11 @@
 open Sexplib.Std
 
+module String = struct
+  type t = string [@@deriving sexp]
+
+  let eval _ t = t
+end
+
 module Path = struct
   type t = string [@@deriving sexp]
 

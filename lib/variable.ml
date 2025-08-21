@@ -58,13 +58,10 @@ end
 module String = struct
   type t =
     | String of string
-    | Unformatted of string
-    | Bold of string
-    | Italics of string
     | If of Boolean.t * t * t
     | When of Boolean.t * t
     | TwoColumn of t * t
-    | StringsList of t list
+    | StringsList of Formatter.T.t list
   [@@deriving sexp]
 
   let rec eval flags t =
@@ -72,9 +69,9 @@ module String = struct
     | If (cond, thn, els) ->
       if Boolean.eval flags cond then eval flags thn else eval flags els
     | When (cond, thn) -> When (cond, thn)
-    | StringsList ss -> StringsList (ss |> List.map (eval flags))
-    | String s -> eval flags (StringsList (Formatter.T.format s))
-    | _ -> t
+    | String s -> StringsList (Formatter.T.format s)
+    | TwoColumn (l, r) -> TwoColumn (eval flags l, eval flags r)
+    | StringsList _ -> failwith "top level StringsList not supported"
   ;;
 end
 
@@ -87,6 +84,6 @@ module Bullets = struct
       match node with
       | String.When (cond, thn) ->
         if Boolean.eval flags cond then Some (String.eval flags thn) else None
-      | _ -> Some node)
+      | _ -> Some (String.eval flags node))
   ;;
 end
