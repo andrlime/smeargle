@@ -2,6 +2,12 @@ let[@inline] get_absolute_file_path file =
   file |> Util.T.unquote |> Filename_unix.realpath
 ;;
 
+let set_working_directory input =
+  let full_path = input |> get_absolute_file_path in
+  full_path |> Filename.dirname |> Sys.chdir;
+  full_path
+;;
+
 let read_file path =
   let channel = open_in path in
   let len = in_channel_length channel in

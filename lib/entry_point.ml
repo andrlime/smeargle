@@ -1,6 +1,6 @@
 let main path =
   path
-  |> Io.get_absolute_file_path
+  |> Io.set_working_directory
   |> Io.read_file
   |> Io.lispify
   |> Ast.T.of_string
