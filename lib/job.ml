@@ -22,5 +22,47 @@ module T = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    match t.bullets with
+    | Some bullets ->
+      Printf.sprintf
+        {|#job(
+    %s,
+    (
+        (
+            %s,
+            %s,
+            %s,
+            (
+                %s,
+            )
+        ),
+    )
+)|}
+        (Variable.String.typst_to_string t.company)
+        (Variable.String.typst_to_string t.title)
+        (Variable.String.typst_to_string t.start
+         ^ {| + " – " + |}
+         ^ Variable.String.typst_to_string t.until)
+        (Variable.String.typst_to_string t.where)
+        (Variable.Bullets.typst_to_string bullets)
+    | None ->
+      Printf.sprintf
+        {|#futurejob(
+    %s,
+    (
+        (
+            %s,
+            %s,
+            %s,
+        ),
+    )
+)|}
+        (Variable.String.typst_to_string t.company)
+        (Variable.String.typst_to_string t.title)
+        (Variable.String.typst_to_string t.start
+         ^ {| + " – " + |}
+         ^ Variable.String.typst_to_string t.until)
+        (Variable.String.typst_to_string t.where)
+  ;;
 end

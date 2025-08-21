@@ -18,4 +18,13 @@ module T = struct
     let year = today.Unix.tm_year + 1900 in
     Printf.sprintf "%04d-%02d-%02d" year month day
   ;;
+
+  let reverse_list lst =
+    let rec helper acc lst =
+      match lst with
+      | [] -> acc
+      | h :: t -> helper (h :: acc) t
+    in
+    helper [] lst
+  ;;
 end

@@ -11,5 +11,10 @@ module T = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    Printf.sprintf
+      {|#award(%s, %s)|}
+      (Variable.String.typst_to_string t.title)
+      (Variable.String.typst_to_string t.organisation)
+  ;;
 end

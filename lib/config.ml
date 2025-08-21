@@ -23,7 +23,21 @@ module Profile = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    Printf.sprintf
+      {|#profile(
+  %s,
+  %s,
+  %s,
+  %s,
+  %s,
+)|}
+      (Variable.String.typst_to_string t.name)
+      (Variable.String.typst_to_string t.website)
+      (Variable.String.typst_to_string t.github)
+      (Variable.String.typst_to_string t.phone)
+      (Variable.String.typst_to_string t.email)
+  ;;
 end
 
 module Margin = struct
@@ -43,7 +57,14 @@ module Margin = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    Printf.sprintf
+      {|(left: %spt, right: %spt, top: %spt, bottom: %spt)|}
+      (Variable.Integer.typst_to_string t.left)
+      (Variable.Integer.typst_to_string t.right)
+      (Variable.Integer.typst_to_string t.top)
+      (Variable.Integer.typst_to_string t.bottom)
+  ;;
 end
 
 module T = struct
@@ -67,5 +88,22 @@ module T = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    Printf.sprintf
+      {|
+#import "%s": *
+#set page(margin: %s, columns: 1)
+#set page(%s)
+#set par(justify: %s)
+#set text(font: %s)
+
+%s
+|}
+      (Variable.Path.typst_to_string t.template)
+      (Margin.typst_to_string t.margin)
+      (Variable.String.typst_to_string t.pagesize)
+      (Literal.Boolean.typst_to_string t.justify)
+      (Variable.String.typst_to_string t.font)
+      (Profile.typst_to_string t.profile)
+  ;;
 end

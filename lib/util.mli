@@ -4,4 +4,5 @@ module T : sig
   val quote : string -> string
   val unquote : string -> string
   val get_current_date : unit -> string
+  val reverse_list : 'a list -> 'a list
 end

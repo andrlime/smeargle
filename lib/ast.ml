@@ -7,7 +7,7 @@ module AstNode = struct
     | Config of Config.T.t
     | Section of Literal.SectionName.t
     | School of School.T.t
-    | List of Literal.SectionName.t * Variable.Bullets.t
+    | List of Literal.ListTitle.t * Variable.Bullets.t
     | Job of Job.T.t
     | Project of Project.T.t
     | Award of Award.T.t

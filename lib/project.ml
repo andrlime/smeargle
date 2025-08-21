@@ -20,5 +20,24 @@ module T = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    let start = Variable.String.typst_to_string t.start in
+    let nd = Variable.String.typst_to_string t.until in
+    let whn = if start <> nd then start ^ {| + " – " + |} ^ nd else start in
+    Printf.sprintf
+      {|#project(
+    %s,
+    %s,
+    %s,
+    (
+        %s,
+    )
+)|}
+      (Variable.String.typst_to_string t.title)
+      (match t.organisation with
+       | Some org -> Variable.String.typst_to_string org
+       | None -> {|""|})
+      whn
+      (Variable.Bullets.typst_to_string t.bullets)
+  ;;
 end

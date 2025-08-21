@@ -6,5 +6,7 @@ let main path =
   |> Ast.T.of_string
   |> Eval.T.evaluate
   |> Codegen.T.emit_and_compile
-  |> ignore
+  |> function
+  | 0 -> ()
+  | _ -> failwith "failed"
 ;;

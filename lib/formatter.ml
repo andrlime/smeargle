@@ -57,4 +57,14 @@ module T = struct
     in
     traverse s stack "" []
   ;;
+
+  let is_not_empty = function
+    | Unformatted s | Bold s | Italics s -> s <> ""
+  ;;
+
+  let typst_to_string = function
+    | Unformatted s -> Printf.sprintf {|"%s"|} s
+    | Bold s -> Printf.sprintf {|strong("%s")|} s
+    | Italics s -> Printf.sprintf {|emph("%s")|} s
+  ;;
 end

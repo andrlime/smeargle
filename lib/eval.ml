@@ -35,10 +35,8 @@ module T = struct
     | Section sec -> Some (Section (Literal.SectionName.eval state.flags sec))
     | School schl -> Some (School (School.T.eval state.flags schl))
     | List (title, bullets) ->
-      Some
-        (List
-           ( Literal.SectionName.eval state.flags title
-           , Variable.Bullets.eval state.flags bullets ))
+      let newtitle, newbullets = Variable.TagList.eval state.flags (title, bullets) in
+      Some (List (newtitle, newbullets))
     | Job j -> Some (Job (Job.T.eval state.flags j))
     | Project proj -> Some (Project (Project.T.eval state.flags proj))
     | Award awrd -> Some (Award (Award.T.eval state.flags awrd))

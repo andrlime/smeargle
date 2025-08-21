@@ -46,3 +46,12 @@ module Bullets : sig
   val eval : Flags.T.t -> t -> t
   val typst_to_string : t -> string
 end
+
+module TagList : sig
+  type t = Literal.ListTitle.t * Bullets.t
+
+  val t_of_sexp : Sexplib0.Sexp.t -> t
+  val sexp_of_t : t -> Sexplib0.Sexp.t
+  val eval : Flags.T.t -> t -> t
+  val typst_to_string : t -> string
+end

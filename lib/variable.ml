@@ -36,7 +36,10 @@ module Integer = struct
       if Boolean.eval flags cond then eval flags thn else eval flags els
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string = function
+    | If _ -> failwith "cannot have post eval If"
+    | Integer i -> string_of_int i
+  ;;
 end
 
 module Path = struct
@@ -58,7 +61,10 @@ module Path = struct
       if Boolean.eval flags cond then eval flags thn else eval flags els
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string = function
+    | IPath p | OPath p -> p
+    | If _ -> failwith "cannot have If after eval"
+  ;;
 end
 
 module String = struct
@@ -80,7 +86,17 @@ module String = struct
     | StringsList _ -> failwith "top level StringsList not supported"
   ;;
 
-  let typst_to_string _t = ""
+  let rec typst_to_string = function
+    | String _ | If _ | When _ ->
+      failwith "unexpected String, If, When block in eval-ed AST"
+    | TwoColumn (l, r) -> typst_to_string l ^ " + h(1fr) + " ^ typst_to_string r
+    | StringsList list ->
+      list
+      |> Util.T.reverse_list
+      |> List.filter Formatter.T.is_not_empty
+      |> List.map Formatter.T.typst_to_string
+      |> Stdlib.String.concat " + "
+  ;;
 end
 
 module Bullets = struct
@@ -95,5 +111,32 @@ module Bullets = struct
       | _ -> Some (String.eval flags node))
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    t
+    |> List.map String.typst_to_string
+    |> List.map (fun b -> "text(" ^ b ^ ")")
+    |> Stdlib.String.concat ",\n"
+  ;;
+end
+
+module TagList = struct
+  type t = Literal.ListTitle.t * Bullets.t [@@deriving sexp]
+
+  let eval flags t =
+    let title, bullets = t in
+    Literal.ListTitle.eval flags title, Bullets.eval flags bullets
+  ;;
+
+  let typst_to_string t =
+    let title, bullets = t in
+    Printf.sprintf
+      {|#tags(
+  %s,
+  (
+    %s
+  )
+)|}
+      (Literal.ListTitle.typst_to_string title)
+      (Bullets.typst_to_string bullets)
+  ;;
 end

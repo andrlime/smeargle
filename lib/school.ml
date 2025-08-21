@@ -22,7 +22,22 @@ module Degree = struct
         }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    match t with
+    | Degree d ->
+      (match d.note with
+       | Some n ->
+         Printf.sprintf
+           {|%s + " in " + %s + " (" + %s + ")"|}
+           (Variable.String.typst_to_string d.title)
+           (Variable.String.typst_to_string d.major)
+           (Variable.String.typst_to_string n)
+       | None ->
+         Printf.sprintf
+           {|%s + " in " + %s|}
+           (Variable.String.typst_to_string d.title)
+           (Variable.String.typst_to_string d.major))
+  ;;
 end
 
 module T = struct
@@ -49,5 +64,21 @@ module T = struct
     }
   ;;
 
-  let typst_to_string _t = ""
+  let typst_to_string t =
+    Printf.sprintf
+      {|#school(
+    %s,
+    %s,
+    %s,
+    %s,
+    %s,
+)|}
+      (Variable.String.typst_to_string t.name)
+      (Variable.String.typst_to_string t.until)
+      (t.degrees |> List.map Degree.typst_to_string |> String.concat {| + ", " + |})
+      (Variable.String.typst_to_string t.where)
+      (match t.gpa with
+       | Some g -> Variable.String.typst_to_string g
+       | _ -> {|""|})
+  ;;
 end
