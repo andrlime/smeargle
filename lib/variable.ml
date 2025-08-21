@@ -133,7 +133,7 @@ module TagList = struct
       {|#tags(
   %s,
   (
-    %s
+    %s,
   )
 )|}
       (Literal.ListTitle.typst_to_string title)

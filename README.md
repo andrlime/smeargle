@@ -6,5 +6,5 @@ To add other output formats, the ast `Output` node needs to be extended with ano
 
 ## TODO
 - [ ] Write unit tests
-- [ ] Write example templates
+- [x] Write example templates
 - [ ] Add some more fun language features
