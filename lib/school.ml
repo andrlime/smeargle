@@ -65,6 +65,10 @@ module T = struct
   ;;
 
   let typst_to_string t =
+    let degrees_string = match List.length t.degrees with
+      | 0 -> ""
+      | _ -> t.degrees |> List.map Degree.typst_to_string |> String.concat {| + ", " + |}
+    in
     Printf.sprintf
       {|#school(
     %s,
@@ -75,7 +79,7 @@ module T = struct
 )|}
       (Variable.String.typst_to_string t.name)
       (Variable.String.typst_to_string t.until)
-      (t.degrees |> List.map Degree.typst_to_string |> String.concat {| + ", " + |})
+      degrees_string
       (Variable.String.typst_to_string t.where)
       (match t.gpa with
        | Some g -> Variable.String.typst_to_string g
