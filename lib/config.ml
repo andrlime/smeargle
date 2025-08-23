@@ -2,9 +2,9 @@ module Profile = struct
   type t =
     { name : Variable.String.t
     ; website : Variable.String.t
-    ; github : Variable.String.t
     ; phone : Variable.String.t
     ; email : Variable.String.t
+    ; github : Variable.String.t option [@sexp.option]
     ; linkedin : Variable.String.t option [@sexp.option]
     }
   [@@deriving sexp]
@@ -13,9 +13,12 @@ module Profile = struct
   let eval flags t =
     { name = Variable.String.eval flags t.name
     ; website = Variable.String.eval flags t.website
-    ; github = Variable.String.eval flags t.github
     ; phone = Variable.String.eval flags t.phone
     ; email = Variable.String.eval flags t.email
+    ; github =
+        (match t.github with
+         | Some g -> Some (Variable.String.eval flags g)
+         | None -> None)
     ; linkedin =
         (match t.linkedin with
          | Some l -> Some (Variable.String.eval flags l)
@@ -30,13 +33,14 @@ module Profile = struct
   %s,
   %s,
   %s,
-  %s,
-)|}
+  %s)|}
       (Variable.String.typst_to_string t.name)
       (Variable.String.typst_to_string t.website)
-      (Variable.String.typst_to_string t.github)
       (Variable.String.typst_to_string t.phone)
       (Variable.String.typst_to_string t.email)
+      (match t.github with
+        | Some g -> (Variable.String.typst_to_string g)
+        | None -> "")
   ;;
 end
 
