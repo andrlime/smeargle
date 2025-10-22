@@ -65,7 +65,8 @@ module T = struct
   ;;
 
   let typst_to_string t =
-    let degrees_string = match List.length t.degrees with
+    let degrees_string =
+      match List.length t.degrees with
       | 0 -> {|""|}
       | _ -> t.degrees |> List.map Degree.typst_to_string |> String.concat {| + "; " + |}
     in

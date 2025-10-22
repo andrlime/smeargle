@@ -39,8 +39,8 @@ module Profile = struct
       (Variable.String.typst_to_string t.phone)
       (Variable.String.typst_to_string t.email)
       (match t.github with
-        | Some g -> (Variable.String.typst_to_string g)
-        | None -> "")
+       | Some g -> Variable.String.typst_to_string g
+       | None -> "")
   ;;
 end
 
