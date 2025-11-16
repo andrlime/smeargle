@@ -28,15 +28,15 @@ module Degree = struct
       (match d.note with
        | Some n ->
          Printf.sprintf
-           {|%s + " in " + %s + " (" + %s + ")"|}
-           (Variable.String.typst_to_string d.title)
+           {|%s + ", " + %s + " (" + %s + ")"|}
            (Variable.String.typst_to_string d.major)
+           (Variable.String.typst_to_string d.title)
            (Variable.String.typst_to_string n)
        | None ->
          Printf.sprintf
-           {|%s + " in " + %s|}
-           (Variable.String.typst_to_string d.title)
-           (Variable.String.typst_to_string d.major))
+           {|%s + ", " + %s|}
+           (Variable.String.typst_to_string d.major)
+           (Variable.String.typst_to_string d.title))
   ;;
 end
 
