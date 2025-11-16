@@ -100,6 +100,7 @@ module T = struct
 #set page(%s)
 #set par(justify: %s)
 #set text(font: %s)
+#set block(above: 0.1em, below: 0.75em)
 
 %s
 |}
