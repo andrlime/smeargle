@@ -70,9 +70,10 @@ module T = struct
   let format_date t =
     match t.start with
     | Some s ->
-      Variable.String.typst_to_string s
-      ^ {| + " – " + |}
-      ^ Variable.String.typst_to_string t.until
+      let start_string = Variable.String.typst_to_string s in
+      if String.length start_string = 0
+      then Variable.String.typst_to_string t.until
+      else start_string ^ {| + " – " + |} ^ Variable.String.typst_to_string t.until
     | None -> Variable.String.typst_to_string t.until
   ;;
 
