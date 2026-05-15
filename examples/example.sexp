@@ -36,7 +36,7 @@
 (School (
     (name (String "Ohio State University"))
     (start (String "September 2022"))
-    (until (String "September 2022 – February 2027"))
+    (until (String "February 2027"))
     (degrees (
         (Degree
             (title (String "BS"))

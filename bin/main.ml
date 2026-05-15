@@ -1,7 +1,7 @@
 open Smeargle
 open Cmdliner
 
-let version = "1.0c"
+let version = "1.1"
 let smeargle_process_file file = file |> Entry_point.main
 
 let input_file_arg =

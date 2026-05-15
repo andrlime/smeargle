@@ -10,7 +10,7 @@ end
 module T : sig
   type t =
     { name : Variable.String.t
-    ; start : Variable.String.t
+    ; start : Variable.String.t option
     ; until : Variable.String.t
     ; degrees : Degree.t list
     ; where : Variable.String.t

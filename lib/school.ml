@@ -43,7 +43,7 @@ end
 module T = struct
   type t =
     { name : Variable.String.t
-    ; start : Variable.String.t
+    ; start : Variable.String.t option [@sexp.option]
     ; until : Variable.String.t
     ; degrees : Degree.t list
     ; where : Variable.String.t
@@ -53,15 +53,27 @@ module T = struct
 
   let eval flags t =
     { name = Variable.String.eval flags t.name
-    ; start = Variable.String.eval flags t.start
     ; until = Variable.String.eval flags t.until
     ; degrees = t.degrees |> List.map (Degree.eval flags)
     ; where = Variable.String.eval flags t.where
+    ; start =
+        (match t.start with
+         | Some s -> Some (Variable.String.eval flags s)
+         | None -> None)
     ; gpa =
         (match t.gpa with
          | Some g -> Some (Variable.String.eval flags g)
          | None -> None)
     }
+  ;;
+
+  let format_date t =
+    match t.start with
+    | Some s ->
+      Variable.String.typst_to_string s
+      ^ {| + " – " + |}
+      ^ Variable.String.typst_to_string t.until
+    | None -> Variable.String.typst_to_string t.until
   ;;
 
   let typst_to_string t =
@@ -79,7 +91,7 @@ module T = struct
     %s,
 )|}
       (Variable.String.typst_to_string t.name)
-      (Variable.String.typst_to_string t.until)
+      (format_date t)
       degrees_string
       (Variable.String.typst_to_string t.where)
       (match t.gpa with
