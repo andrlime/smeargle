@@ -11,6 +11,7 @@ module TypstGenerator = struct
       | Job j -> Job.T.typst_to_string j
       | Project proj -> Project.T.typst_to_string proj
       | Award awrd -> Award.T.typst_to_string awrd
+      | Publication s -> Printf.sprintf {|#pub(%s)|} (Variable.String.typst_to_string s)
       | Flag _ -> failwith "should not have fail in eval-ed AST"
       | If _ -> "should not have if in eval-ed AST"
       | When _ -> failwith "should not have when in eval-ed AST")

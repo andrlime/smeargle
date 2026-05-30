@@ -40,6 +40,7 @@ module T = struct
     | Job j -> Some (Job (Job.T.eval state.flags j))
     | Project proj -> Some (Project (Project.T.eval state.flags proj))
     | Award awrd -> Some (Award (Award.T.eval state.flags awrd))
+    | Publication s -> Some (Publication (Variable.String.eval state.flags s))
     | If (whn, thn, els) ->
       if Variable.Boolean.eval state.flags whn then eval state thn else eval state els
     | When (cond, node) ->

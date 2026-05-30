@@ -186,3 +186,8 @@
     ]
     v(-2pt)
 }
+
+#let pub(citation) = {
+    text(9.5pt)[#citation]
+    v(-2pt)
+}

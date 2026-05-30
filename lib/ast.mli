@@ -9,6 +9,7 @@ module AstNode : sig
     | Job of Job.T.t
     | Project of Project.T.t
     | Award of Award.T.t
+    | Publication of Variable.String.t
     | When of Variable.Boolean.t * t
     | If of Variable.Boolean.t * t * t
 
