@@ -3,12 +3,14 @@ module T = struct
     | Unformatted of Literal.String.t
     | Bold of Literal.String.t
     | Italics of Literal.String.t
+    | Backticked of Literal.String.t
   [@@deriving sexp]
 
   let create_t ~typ:fmt str =
     match fmt with
     | '*' -> Bold str
     | '_' -> Italics str
+    | '`' -> Backticked str
     | _ -> Unformatted str
   ;;
 
@@ -16,7 +18,7 @@ module T = struct
 
   let[@inline] should_start_block ch =
     match ch with
-    | '*' | '_' -> true
+    | '*' | '_' | '`' -> true
     | _ -> false
   ;;
 
@@ -28,6 +30,7 @@ module T = struct
   (*
      Bold: *string*
     Italics: _string_
+    Raw/tt: `string`
 
     TODO: Support escape sequences
     TODO: Support stacking, like *_thing_*
@@ -59,12 +62,13 @@ module T = struct
   ;;
 
   let is_not_empty = function
-    | Unformatted s | Bold s | Italics s -> s <> ""
+    | Unformatted s | Bold s | Italics s | Backticked s -> s <> ""
   ;;
 
   let typst_to_string = function
     | Unformatted s -> Printf.sprintf {|"%s"|} s
     | Bold s -> Printf.sprintf {|strong("%s")|} s
     | Italics s -> Printf.sprintf {|emph("%s")|} s
+    | Backticked s -> Printf.sprintf {|raw("%s")|} s
   ;;
 end
