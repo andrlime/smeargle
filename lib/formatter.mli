@@ -1,9 +1,10 @@
 module T : sig
-  type t =
-    | Unformatted of string
-    | Bold of string
-    | Italics of string
-    | Backticked of string
+  type style =
+    | Bold
+    | Italics
+    | Raw
+
+  type t = Styled of style list * string
 
   val t_of_sexp : Sexplib0.Sexp.t -> t
   val sexp_of_t : t -> Sexplib0.Sexp.t
